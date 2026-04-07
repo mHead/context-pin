@@ -1,0 +1,13 @@
+{
+  "name": "pin",
+  "version": "0.1.0",
+  "description": "Pin critical context so it survives compaction in Claude Code",
+  "author": {
+    "name": "Marco Testa",
+    "url": "https://github.com/mHead"
+  },
+  "homepage": "https://github.com/mHead/claude-pin",
+  "repository": "https://github.com/mHead/claude-pin",
+  "license": "MIT",
+  "keywords": ["context", "compaction", "memory", "pinning"]
+}

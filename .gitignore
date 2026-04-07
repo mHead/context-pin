@@ -1,0 +1,5 @@
+node_modules/
+.claude/claude-pin/
+.claude/claude-pin.md
+.claude/settings.local.json
+.claude/agents/

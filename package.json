@@ -1,0 +1,27 @@
+{
+  "name": "claude-pin",
+  "version": "0.1.0",
+  "description": "Claude Code plugin — pin critical context so it survives compaction",
+  "author": "Marco Testa (@mHead)",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mHead/claude-pin"
+  },
+  "keywords": [
+    "claude-code",
+    "claude-code-plugin",
+    "plugin",
+    "context",
+    "compaction",
+    "pinning",
+    "memory",
+    "persistence"
+  ]
+}
