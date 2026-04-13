@@ -1,0 +1,6 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Context Pin">
+  <rect x="8" y="8" width="112" height="112" rx="24" fill="#111827"/>
+  <circle cx="64" cy="42" r="16" fill="#84CC16"/>
+  <rect x="60" y="52" width="8" height="34" rx="4" fill="#E5E7EB"/>
+  <path d="M64 106 L53 86 H75 Z" fill="#E5E7EB"/>
+</svg>

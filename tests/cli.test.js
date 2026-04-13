@@ -59,7 +59,7 @@ describe('cli add', () => {
 
 describe('cli list', () => {
   it('shows helpful message when empty', () => {
-    assert.ok(run('list').includes('/pin:add'));
+    assert.ok(run('list').includes('/context-pin:add'));
   });
 
   it('lists pins with IDs and text', () => {
@@ -81,7 +81,7 @@ describe('cli remove', () => {
   it('removes a pin by ID', () => {
     const id = run('add', 'to remove').match(/\(([a-f0-9]{8})\)/)[1];
     assert.ok(run('remove', id).includes('Removed'));
-    assert.ok(run('list').includes('/pin:add'));
+    assert.ok(run('list').includes('/context-pin:add'));
   });
 
   it('removes by ID prefix', () => {
@@ -92,12 +92,12 @@ describe('cli remove', () => {
   it('fails for nonexistent ID with helpful message', () => {
     const err = runFail('remove', 'deadbeef');
     assert.ok(err.stderr.includes('not found'));
-    assert.ok(err.stderr.includes('/pin:list'));
+    assert.ok(err.stderr.includes('/context-pin:list'));
   });
 
   it('fails without ID with helpful message', () => {
     const err = runFail('remove');
-    assert.ok(err.stderr.includes('/pin:list'));
+    assert.ok(err.stderr.includes('/context-pin:list'));
   });
 });
 
@@ -182,7 +182,7 @@ describe('cli update', () => {
   it('fails for nonexistent target with helpful message', () => {
     const err = runFail('add', 'nope', '--update', 'deadbeef');
     assert.ok(err.stderr.includes('not found'));
-    assert.ok(err.stderr.includes('/pin:list'));
+    assert.ok(err.stderr.includes('/context-pin:list'));
   });
 
   it('fails when --update has no ID', () => {
@@ -242,3 +242,4 @@ describe('cli error handling', () => {
     assert.ok(!err.stderr.includes('cli.js'));
   });
 });
+

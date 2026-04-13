@@ -1,10 +1,10 @@
-# Contributing to claude-pin
+# Contributing to context-pin
 
 ## Setup
 
 ```bash
-git clone https://github.com/mHead/claude-pin.git
-cd claude-pin
+git clone https://github.com/mHead/context-pin.git
+cd context-pin
 npm test
 ```
 

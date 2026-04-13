@@ -22,7 +22,7 @@ describe('session-start hook', () => {
   it('shows onboarding message when no pins', () => {
     const out = hook(SESSION_START);
     assert.ok(out.includes('Pin plugin active'));
-    assert.ok(out.includes('/pin:add'));
+    assert.ok(out.includes('/context-pin:add'));
   });
 
   it('shows pins with IDs when they exist', () => {
@@ -103,7 +103,7 @@ describe('pre-compact hook', () => {
   it('expires context pins after 5 compactions', () => {
     cli('add', 'ctx', '--context');
     for (let i = 0; i < 5; i++) hook(PRE_COMPACT);
-    assert.ok(cli('list').includes('/pin:add'));
+    assert.ok(cli('list').includes('/context-pin:add'));
   });
 
   it('keeps permanent pins through many compactions', () => {
@@ -143,3 +143,4 @@ describe('session-start output format', () => {
     assert.ok(out.indexOf('[PROJECT]') < out.indexOf('[GLOBAL]'));
   });
 });
+

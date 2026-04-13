@@ -6,7 +6,7 @@ user-invocable: true
 allowed-tools: Bash
 ---
 
-# /pin:add
+# /context-pin:add
 
 Pin important context so it persists across compaction cycles.
 
@@ -41,3 +41,4 @@ Examples of when to suggest:
 - "We decided to use PostgreSQL over SQLite" → "Want me to pin that?"
 - "The API must respond in under 200ms" → "Want me to pin that as well?"
 - "We're using the repository pattern for data access" → "Should I pin that?"
+

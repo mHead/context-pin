@@ -11,7 +11,7 @@ function createTmpEnv({ separateHome = false } = {}) {
     ? (() => { const h = path.join(tmpDir, 'home'); fs.mkdirSync(h, { recursive: true }); return h; })()
     : tmpDir;
 
-  const env = { ...process.env, HOME: homeDir, USERPROFILE: homeDir };
+  const env = { ...process.env, HOME: homeDir, USERPROFILE: homeDir, PIN_SKIP_UPDATE_CHECK: '1' };
 
   function exec(script, args = [], { stdin } = {}) {
     if (stdin !== undefined) {

@@ -6,7 +6,7 @@ user-invocable: true
 allowed-tools: Bash
 ---
 
-# /pin:list
+# /context-pin:list
 
 List all active pinned context, grouped by scope.
 
@@ -24,3 +24,4 @@ Display results as a clean list:
 - **Expires** — "permanent" or "N compactions left"
 
 Keep the output compact. Don't add extra commentary.
+

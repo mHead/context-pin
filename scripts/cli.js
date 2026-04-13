@@ -19,7 +19,7 @@ function parseFlags(args) {
       flags.category = args[++i];
     } else if (args[i] === '--update') {
       if (!args[i + 1] || args[i + 1].startsWith('--')) {
-        console.error('--update requires a pin ID. Run /pin:list to see all pins.');
+        console.error('--update requires a pin ID. Run /context-pin:list to see all pins.');
         process.exit(1);
       }
       flags.updateId = args[++i];
@@ -66,7 +66,7 @@ switch (command) {
         if (pin) {
           console.log(`Updated pin ${pin.id}: ${pin.text}`);
         } else {
-          console.error(`Pin "${updateId}" not found. Run /pin:list to see all pins.`);
+          console.error(`Pin "${updateId}" not found. Run /context-pin:list to see all pins.`);
           process.exit(1);
         }
       } else {
@@ -88,7 +88,7 @@ switch (command) {
     const { scope } = parseFlags(args.slice(1));
     const all = store.listPins(scope ? { scope } : {});
     if (Object.keys(all).length === 0) {
-      console.log('No pins yet. Use /pin:add "text" to pin your first decision.');
+      console.log('No pins yet. Use /context-pin:add "text" to pin your first decision.');
       break;
     }
     for (const [s, pins] of Object.entries(all)) {
@@ -103,7 +103,7 @@ switch (command) {
   case 'remove': {
     const id = args[1];
     if (!id) {
-      console.error('Usage: remove <id>. Run /pin:list to see all pins.');
+      console.error('Usage: remove <id>. Run /context-pin:list to see all pins.');
       process.exit(1);
     }
     const removed = store.removePin(id);
@@ -112,7 +112,7 @@ switch (command) {
       console.log(`Removed: ${removed.text}`);
       store.generateClaudeMd();
     } else {
-      console.error(`Pin "${id}" not found. Run /pin:list to see all pins.`);
+      console.error(`Pin "${id}" not found. Run /context-pin:list to see all pins.`);
       process.exit(1);
     }
     break;
@@ -140,7 +140,7 @@ switch (command) {
         console.log(`Moved pin ${pin.id} to ${target}: ${pin.text}`);
         store.generateClaudeMd();
       } else {
-        console.error(`Pin "${query}" not found. Run /pin:list to see all pins.`);
+        console.error(`Pin "${query}" not found. Run /context-pin:list to see all pins.`);
         process.exit(1);
       }
     } catch (err) {
@@ -164,3 +164,4 @@ switch (command) {
     console.error('Commands: add, list, remove, move, clear, generate');
     process.exit(1);
 }
+

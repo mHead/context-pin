@@ -1,0 +1,33 @@
+{
+  "name": "context-pin",
+  "version": "0.2.0",
+  "description": "Pin critical context so it survives compaction",
+  "author": {
+    "name": "Marco Testa",
+    "url": "https://github.com/mHead"
+  },
+  "homepage": "https://github.com/mHead/context-pin",
+  "repository": "https://github.com/mHead/context-pin",
+  "license": "MIT",
+  "keywords": ["context", "compaction", "memory", "pinning"],
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks-codex.json",
+  "interface": {
+    "displayName": "Context Pin",
+    "shortDescription": "Pin critical context across compactions.",
+    "longDescription": "Keep important decisions and constraints persistent in Codex by pinning them and restoring them on session start.",
+    "developerName": "Marco Testa",
+    "category": "Productivity",
+    "capabilities": ["Write"],
+    "websiteURL": "https://github.com/mHead/context-pin",
+    "privacyPolicyURL": "https://github.com/mHead/context-pin/blob/main/README.md",
+    "termsOfServiceURL": "https://github.com/mHead/context-pin/blob/main/LICENSE",
+    "defaultPrompt": [
+      "Use context-pin when key decisions should persist across compaction."
+    ],
+    "composerIcon": "./assets/context-pin-small.svg",
+    "logo": "./assets/context-pin.svg",
+    "screenshots": [],
+    "brandColor": "#84CC16"
+  }
+}

@@ -2,8 +2,29 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
-let PROJECT_DIR = path.join(process.cwd(), '.claude', 'claude-pin');
-let GLOBAL_DIR = path.join(process.env.HOME || process.env.USERPROFILE, '.claude', 'claude-pin');
+function detectAgent() {
+  if (process.env.CODEX_PLUGIN_ROOT) return 'codex';
+  return 'claude';
+}
+
+function defaultDirs(agent) {
+  const home = process.env.HOME || process.env.USERPROFILE;
+  if (agent === 'codex') {
+    return {
+      project: path.join(process.cwd(), '.codex', 'context-pin'),
+      global: path.join(home, '.codex', 'context-pin'),
+    };
+  }
+  return {
+    project: path.join(process.cwd(), '.claude', 'claude-pin'),
+    global: path.join(home, '.claude', 'claude-pin'),
+  };
+}
+
+const DETECTED_AGENT = detectAgent();
+const defaults = defaultDirs(DETECTED_AGENT);
+let PROJECT_DIR = defaults.project;
+let GLOBAL_DIR = defaults.global;
 let CWD_OVERRIDE = null;
 
 const STORAGE_SCOPES = ['project', 'global'];
@@ -392,7 +413,9 @@ function formatClaudeMd(pinsByScope) {
 
 function generateClaudeMd() {
   const cwd = CWD_OVERRIDE || process.cwd();
-  const outPath = path.join(cwd, '.claude', 'claude-pin.md');
+  const agentDir = DETECTED_AGENT === 'codex' ? '.codex' : '.claude';
+  const outFile = DETECTED_AGENT === 'codex' ? 'context-pin.md' : 'claude-pin.md';
+  const outPath = path.join(cwd, agentDir, outFile);
 
   const content = formatClaudeMd(listPins());
   if (!content) {
@@ -407,6 +430,7 @@ function generateClaudeMd() {
 }
 
 module.exports = {
+  detectAgent,
   configure,
   addPin,
   updatePin,

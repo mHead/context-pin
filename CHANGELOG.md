@@ -15,7 +15,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 - Onboarding message on first session
 - Session pins that survive compaction but clear on next startup
 - Pin lifetime: permanent (default), temporary (--context), session (--session)
-- Skills: /pin:add, /pin:list, /pin:remove, /pin:clear
+- Skills: /context-pin:add, /context-pin:list, /context-pin:remove, /context-pin:clear
 - 141 tests (unit, CLI integration, hooks integration, schema validation)
 - Security: input sanitization, schema validation, file locking, .gitignore protection
 - Privacy: 100% local, zero network calls, restrictive file permissions
+

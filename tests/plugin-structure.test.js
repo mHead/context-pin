@@ -69,7 +69,7 @@ const VALID_EFFORT = new Set(['low', 'medium', 'high', 'max']);
 const VALID_PLUGIN_FIELDS = new Set([
   'name', 'version', 'description', 'author', 'homepage', 'repository',
   'license', 'keywords', 'commands', 'agents', 'skills', 'hooks',
-  'mcpServers', 'outputStyles', 'lspServers', 'userConfig', 'channels',
+  'mcpServers', 'outputStyles', 'lspServers', 'userConfig', 'channels', 'interface',
 ]);
 
 // ==============================
@@ -242,12 +242,100 @@ describe('skills structure', () => {
 });
 
 // ==============================
+// Codex plugin.json
+// ==============================
+
+describe('codex plugin.json schema', () => {
+  const plugin = readJSON('.codex-plugin/plugin.json');
+
+  it('is located at .codex-plugin/plugin.json', () => {
+    assert.ok(exists('.codex-plugin/plugin.json'));
+  });
+
+  it('has required name field matching Claude Code plugin', () => {
+    const ccPlugin = readJSON('.claude-plugin/plugin.json');
+    assert.equal(plugin.name, ccPlugin.name);
+  });
+
+  it('has matching version', () => {
+    const ccPlugin = readJSON('.claude-plugin/plugin.json');
+    assert.equal(plugin.version, ccPlugin.version);
+  });
+
+  it('hooks field points to codex-specific hooks file', () => {
+    assert.ok(plugin.hooks.includes('hooks-codex'));
+    assert.ok(exists(plugin.hooks.replace('./', '')));
+  });
+
+  it('skills field points to shared skills directory', () => {
+    assert.equal(plugin.skills, './skills/');
+  });
+});
+
+// ==============================
+// Codex hooks
+// ==============================
+
+describe('codex hooks.json schema', () => {
+  const hooksFile = readJSON('hooks/hooks-codex.json');
+  const { hooks } = hooksFile;
+
+  it('has SessionStart hook', () => {
+    assert.ok(hooks.SessionStart);
+  });
+
+  it('does NOT have PreCompact hook (not supported on Codex)', () => {
+    assert.equal(hooks.PreCompact, undefined);
+  });
+
+  it('SessionStart references session-start.js', () => {
+    const cmd = hooks.SessionStart[0].hooks[0].command;
+    assert.ok(cmd.includes('session-start.js'));
+  });
+
+  it('uses ${CODEX_PLUGIN_ROOT} not ${CLAUDE_PLUGIN_ROOT}', () => {
+    const raw = readRaw('hooks/hooks-codex.json');
+    assert.ok(raw.includes('CODEX_PLUGIN_ROOT'));
+    assert.ok(!raw.includes('CLAUDE_PLUGIN_ROOT'));
+  });
+
+  it('command hooks reference scripts that exist', () => {
+    forEachHook(hooks, (hook) => {
+      if (hook.type !== 'command') return;
+      const match = hook.command.match(/\$\{CODEX_PLUGIN_ROOT\}\/([^"]+)/);
+      if (match) assert.ok(exists(match[1]), `missing: ${match[1]}`);
+    });
+  });
+});
+
+// ==============================
+// AGENTS.md (Codex instructions)
+// ==============================
+
+describe('AGENTS.md', () => {
+  it('exists at repo root', () => {
+    assert.ok(exists('AGENTS.md'));
+  });
+
+  it('mentions pin commands', () => {
+    const content = readRaw('AGENTS.md');
+    assert.ok(content.includes('/context-pin:add'));
+    assert.ok(content.includes('/context-pin:remove'));
+    assert.ok(content.includes('/context-pin:list'));
+  });
+});
+
+// ==============================
 // Directory structure
 // ==============================
 
 describe('directory structure', () => {
-  it('.claude-plugin/ contains only plugin.json', () => {
+  it('.claude-plugin/ contains expected files', () => {
     assert.deepEqual(fs.readdirSync(path.join(ROOT, '.claude-plugin')).sort(), ['marketplace.json', 'plugin.json']);
+  });
+
+  it('.codex-plugin/ contains plugin.json', () => {
+    assert.ok(fs.readdirSync(path.join(ROOT, '.codex-plugin')).includes('plugin.json'));
   });
 
   it('required directories exist at plugin root', () => {
@@ -262,19 +350,30 @@ describe('directory structure', () => {
     }
   });
 
+  it('both hooks configs exist', () => {
+    assert.ok(exists('hooks/hooks.json'), 'missing Claude Code hooks');
+    assert.ok(exists('hooks/hooks-codex.json'), 'missing Codex hooks');
+  });
+
   it('expected skill set is complete', () => {
-    assert.deepEqual(new Set(SKILL_DIRS), new Set(['add', 'list', 'remove', 'move', 'clear']));
+    assert.deepEqual(new Set(SKILL_DIRS), new Set(['add', 'list', 'remove', 'move', 'clear-all']));
   });
 
   it('no paths traverse outside plugin root', () => {
     assert.ok(!readRaw('hooks/hooks.json').includes('../'));
+    assert.ok(!readRaw('hooks/hooks-codex.json').includes('../'));
     assert.ok(!readRaw('.claude-plugin/plugin.json').includes('../'));
+    assert.ok(!readRaw('.codex-plugin/plugin.json').includes('../'));
   });
 
   it('.gitignore excludes pin data from version control', () => {
     assert.ok(exists('.gitignore'));
     const gitignore = readRaw('.gitignore');
-    assert.ok(gitignore.includes('.claude/claude-pin/'), '.gitignore must exclude pin data');
+    assert.ok(gitignore.includes('.claude/claude-pin/'), '.gitignore must exclude Claude pin data');
     assert.ok(gitignore.includes('.claude/claude-pin.md'), '.gitignore must exclude generated md');
+    assert.ok(gitignore.includes('.codex/context-pin/'), '.gitignore must exclude Codex pin data');
+    assert.ok(gitignore.includes('.codex/context-pin.md'), '.gitignore must exclude Codex generated md');
   });
 });
+
+

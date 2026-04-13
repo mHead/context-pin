@@ -1,12 +1,12 @@
 ---
-name: clear
+name: clear-all
 description: Clear all pinned context
 argument-hint: "[--global]"
 user-invocable: true
 allowed-tools: Bash
 ---
 
-# /pin:clear
+# /context-pin:clear-all
 
 Clear all pins. Ask for confirmation before executing — this is destructive.
 
@@ -19,3 +19,4 @@ Clear all pins. Ask for confirmation before executing — this is destructive.
 ```bash
 node "${CLAUDE_PLUGIN_ROOT}/scripts/cli.js" clear $ARGUMENTS
 ```
+

@@ -1,6 +1,6 @@
 {
-  "name": "claude-pin",
-  "version": "0.1.0",
+  "name": "context-pin",
+  "version": "0.2.0",
   "description": "Claude Code plugin — pin critical context so it survives compaction",
   "author": "Marco Testa (@mHead)",
   "license": "MIT",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mHead/claude-pin"
+    "url": "https://github.com/mHead/context-pin"
   },
   "keywords": [
     "claude-code",

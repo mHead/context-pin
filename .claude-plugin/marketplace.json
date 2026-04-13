@@ -1,5 +1,5 @@
 {
-  "name": "mHead-claude-pin",
+  "name": "mHead-context-pin",
   "owner": {
     "name": "Marco Testa",
     "email": "marco_testa@icloud.com"
@@ -9,20 +9,21 @@
   },
   "plugins": [
     {
-      "name": "pin",
+      "name": "context-pin",
       "source": {
         "source": "url",
-        "url": "https://github.com/mHead/claude-pin.git"
+        "url": "https://github.com/mHead/context-pin.git"
       },
       "description": "Pin critical context so it survives compaction in Claude Code",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "author": {
         "name": "Marco Testa"
       },
-      "homepage": "https://github.com/mHead/claude-pin",
-      "repository": "https://github.com/mHead/claude-pin",
+      "homepage": "https://github.com/mHead/context-pin",
+      "repository": "https://github.com/mHead/context-pin",
       "license": "MIT",
       "keywords": ["context", "compaction", "memory", "pinning"]
     }
   ]
 }
+
